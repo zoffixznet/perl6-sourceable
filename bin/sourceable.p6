@@ -22,11 +22,19 @@ class Sourceable::Info {
 }
 
 .run with IRC::Client.new:
-    :nick<sourceable>,
+    :nick<SourceBaby>,
     :host(%*ENV<SOURCEABLE_IRC_HOST> // 'irc.freenode.net'),
     :channels( %*ENV<SOURCEABLE_DEBUG> ?? '#zofbot' !! |<#perl6  #perl6-dev  #zofbot>),
     :debug,
     :plugins(
         Sourceable::Info.new,
-        Sourceable::Plugin::Sourcery.new,
+        Sourceable::Plugin::Sourcery.new:
+            :executable-dir(
+                %*ENV<SOURCEABLE_EXE>
+                    // '/home/zoffix/services/sourceable/perl6/'
+            ),
+            :core-hackers(
+                %*ENV<SOURCEABLE_SOURCERY>
+                    // '/home/zoffix/services/lib/CoreHackers-Sourcery/lib'
+            )
     );

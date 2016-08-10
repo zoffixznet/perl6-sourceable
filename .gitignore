@@ -2,3 +2,6 @@
 lib/.precomp
 config.json
 tickets.sqlite.db
+perl6/
+building-perl6/
+
