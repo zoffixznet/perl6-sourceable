@@ -10,7 +10,8 @@ method irc-privmsg-channel ($ where /^ 's:' \s* $<code>=.+/) {
     is-safeish $code or return "Ehhh... I'm too scared to run that code.";
 
     chdir $.executable-dir;
-    my $result = run(
+    my $p = run(
+        :err,
         :out,  './perl6-m', '-I', $.core-hackers,
         '-e', qq:to/END/
             BEGIN \{
@@ -20,9 +21,10 @@ method irc-privmsg-channel ($ where /^ 's:' \s* $<code>=.+/) {
             use CoreHackers::Sourcery;
             put sourcery( $code )[1];
         END
-    ).out.slurp-rest;
-
-    return "Something's wrong: $result.subst("\n", '␤', :g)"
+    );
+    my $result = $p.out.slurp-rest;
+    my $merge = $result ~ "\nERR: " ~ $p.err.slurp-rest;
+    return "Something's wrong: $merge.subst("\n", '␤', :g)"
         unless $result ~~ /github/;
 
     return "Sauce is at $result";
