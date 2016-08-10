@@ -1,0 +1,19 @@
+{
+    "perl"         : "6.c",
+    "name"         : "sourceable",
+    "version"      : "1.001001",
+    "description"  : "Helper bot for Perl 6 development",
+    "depends"      : [
+        "IRC::Client",
+        "CoreHackers::Sourcery"
+    ],
+    "test-depends" : [
+        "Test"
+    ],
+    "provides"     : {
+    },
+    "authors" : ["Zoffix Znet"],
+    "support" : {
+        "source" : "git://github.com/zoffixznet/perl6-sourceable.git"
+    }
+}
