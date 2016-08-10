@@ -1,6 +1,6 @@
-use CoreHackers::Sourcery;
 unit class Sourceable::Plugin::Sourcery;
-# use MONKEY-SEE-NO-EVAL;
+use MONKEY-SEE-NO-EVAL;
+use CoreHackers::Sourcery;
 
 method irc-privmsg-channel ($ where /^ 's:' \s* $<code>=.+/) {
     my $code = ~$<code>;
