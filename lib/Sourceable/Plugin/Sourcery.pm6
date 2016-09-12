@@ -5,7 +5,7 @@ use CoreHackers::Sourcery;
 has $.executable-dir is required;
 has $.core-hackers   is required;
 
-method irc-privmsg-channel ($ where /^ 's:' \s* $<code>=.+/) {
+method irc-privmsg-channel ($ where /^ 's:' \s+ $<code>=.+/) {
     my $code = ~$<code>;
     is-safeish $code or return "Ehhh... I'm too scared to run that code.";
 
