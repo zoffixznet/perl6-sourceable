@@ -23,6 +23,7 @@ class Sourceable::Info {
 
 .run with IRC::Client.new:
     :nick<SourceBaby>,
+    :username<zofbot-sourcebaby>,
     :host(%*ENV<SOURCEABLE_IRC_HOST> // 'irc.freenode.net'),
     :channels( %*ENV<SOURCEABLE_DEBUG> ?? '#zofbot' !! |<#perl6  #perl6-dev  #zofbot>),
     :debug,
