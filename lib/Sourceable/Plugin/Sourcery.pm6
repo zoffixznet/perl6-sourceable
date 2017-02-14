@@ -2,6 +2,8 @@ unit class Sourceable::Plugin::Sourcery;
 use MONKEY-SEE-NO-EVAL;
 use CoreHackers::Sourcery;
 
+%*ENV<RAKUDO_ERROR_COLOR> = 0;
+
 has $.executable-dir is required;
 has $.core-hackers   is required;
 
