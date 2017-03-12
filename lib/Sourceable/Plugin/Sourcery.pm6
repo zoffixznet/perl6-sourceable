@@ -8,7 +8,7 @@ use CoreHackers::Sourcery;
 has $.executable-dir is required;
 has $.core-hackers   is required;
 
-subset NonBlocked where -> $user {
+subset NonBlocked where sub ($user) {
     my @blocked = |from-json "/home/zoffix/services/sourceable/blocked.json".IO.slurp;
     for @blocked -> $b {
         return False if
