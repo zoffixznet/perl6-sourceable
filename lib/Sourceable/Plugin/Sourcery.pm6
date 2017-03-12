@@ -12,8 +12,8 @@ subset NonBlocked where -> $user {
     my @blocked = |from-json "/home/zoffix/services/sourceable/blocked.json".IO.slurp;
     for @blocked -> $b {
         return False if
-               ($b<host> andthen $_ eq $user<host>)
-            or ($b<nick> andthen $_ eq $user<nick>);
+               ($b<host> andthen $_ eq $user.host)
+            or ($b<nick> andthen $_ eq $user.nick);
     }
     True;
 };
