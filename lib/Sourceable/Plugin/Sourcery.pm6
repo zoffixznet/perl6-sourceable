@@ -31,7 +31,7 @@ method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
         '-e', qq:to/END/
             BEGIN \{
                 \%*ENV<SOURCERY_SETTING>
-                = '{$.executable-dir}gen/moar/m-CORE.setting';
+                = '{$.executable-dir}gen/moar/CORE.setting';
             \};
             use CoreHackers::Sourcery;
             put sourcery( $code )[1];
