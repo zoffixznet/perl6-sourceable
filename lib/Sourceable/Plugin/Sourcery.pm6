@@ -18,7 +18,7 @@ subset NonBlocked where sub ($user) {
     True;
 };
 
-method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
+multi method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
     my $code = ~$<code>;
     unless $e.host eq 'unaffiliated/zoffix' | 'perl6.party' {
         is-safeish $code or return "Ehhh... I'm too scared to run that code.";
@@ -45,7 +45,7 @@ method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
     }
 }
 
-method irc-privmsg-channel (NonBlocked $e where /^ 'qast:' \s+ $<code>=.+/) {
+multi method irc-privmsg-channel (NonBlocked $e where /^ 'qast:' \s+ $<code>=.+/) {
     my $code = ~$<code>;
     indir $.executable-dir, sub {
         my $p = run :err, :out,  './install/bin/nqp', '-e', QAST-box $code.subst: :g, /'▸'(\w+)/, {"QAST::$0.new"};
