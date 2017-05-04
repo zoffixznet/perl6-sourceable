@@ -48,7 +48,7 @@ method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
 method irc-addressed (NonBlocked $e where /^ :i 'qast' \s+ $<code>=.+/) {
     my $code = ~$<code>;
     indir $.executable-dir, sub {
-        my $p = run :err, :out,  './install/bin/nqp', '-e', QAST-box $code;
+        my $p = run :err, :out,  './install/bin/nqp', '-e', QAST-box $code.subst: :g, /'▸'(\w+)/, "QAST::$0.new";
         my $result = $p.out.slurp: :close;
         my $merge = $result ~ "\nERR: " ~ $p.err.slurp: :close;
         return "Something's wrong: $merge.subst("\n", '␤', :g)"
@@ -76,7 +76,7 @@ sub QAST-box ($code) {
         }
         grammar Perl7::Actions is HLL::Actions {
             method TOP($/) {
-                make INSERT-CODE-HERE
+                make QAST::Block.new: QAST::Stmts.new: INSERT-CODE-HERE
             }
         }
 
