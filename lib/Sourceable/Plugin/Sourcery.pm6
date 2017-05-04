@@ -23,6 +23,7 @@ multi method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
     unless $e.host eq 'unaffiliated/zoffix' | 'perl6.party' {
         is-safeish $code or return "Ehhh... I'm too scared to run that code.";
     }
+    
     indir $.executable-dir, sub {
         my $p = run(
             :err,
@@ -48,13 +49,14 @@ multi method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
 multi method irc-privmsg-channel (NonBlocked $e where /^ 'qast:' \s+ $<code>=.+/) {
     my $code = ~$<code>;
     indir $.executable-dir, sub {
-        my $p = run :err, :out,  './install/bin/nqp', '-e', QAST-box $code.subst: :g, /'▸'(\w+)/, {"QAST::$0.new"};
-        my $result = $p.out.slurp: :close;
-        my $merge = $result ~ "\nERR: " ~ $p.err.slurp: :close;
-        return "Something's wrong: $merge.subst("\n", '␤', :g)"
-            unless $result ~~ /github/;
-
-        return "Sauce is at $result";
+        my $temp = "/tmp/buggable-bot-qast-temp.nqp";
+        $temp.IO.spurt: QAST-box $code.subst: :g, /'▸'(\w+)/, {"QAST::$0.new"};
+        my $p = run :err, :out,  './install/bin/nqp', $temp, '-e', '';
+        my $result = "OUTPUT: «{$p.out.slurp: :close}»";
+        if $p.err.slurp: :close -> $_ {
+            $result ~= "\nERR: " ~ (.chars > 200 ?? .substr(0, 200) ~ '…' !! $_);
+        }
+        $result.subst: "\n", '␤', :g;
     }
 }
 
