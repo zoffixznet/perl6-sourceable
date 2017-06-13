@@ -20,7 +20,7 @@ subset NonBlocked where sub ($user) {
 
 multi method irc-privmsg-channel (NonBlocked $e where /^ 's:' \s+ $<code>=.+/) {
     my $code = ~$<code>;
-    unless $e.host eq 'unaffiliated/zoffix' | 'perl6.party' {
+    unless $e.host eq 'perl6/zoffix' | 'perl6.party' {
         is-safeish $code or return "Ehhh... I'm too scared to run that code.";
     }
     
