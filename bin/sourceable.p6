@@ -1,9 +1,5 @@
 #!/usr/bin/env perl6
-use lib <
-    /home/zoffix/CPANPRC/IRC-Client/lib
-    /home/zoffix/services/lib/IRC-Client/lib
-    lib
->;
+use lib <lib>;
 
 use IRC::Client;
 use Sourceable::Plugin::Sourcery;
@@ -25,7 +21,7 @@ class Sourceable::Info {
     :nick<SourceBaby>,
     :username<zofbot-sourcebaby>,
     :host(%*ENV<SOURCEABLE_IRC_HOST> // 'irc.freenode.net'),
-    :channels( %*ENV<SOURCEABLE_DEBUG> ?? '#zofbot' !! |<#perl6-dev  #moarvm  #zofbot>),
+    :channels( %*ENV<SOURCEABLE_DEBUG> ?? '#zofbot' !! |<#perl6-dev  #moarvm  #zofbot #perl6>),
     :debug,
     :plugins(
         Sourceable::Info.new,
