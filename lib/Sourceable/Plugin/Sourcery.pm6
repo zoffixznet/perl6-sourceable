@@ -1,7 +1,6 @@
 unit class Sourceable::Plugin::Sourcery;
 use MONKEY-SEE-NO-EVAL;
 use JSON::Fast;
-use CoreHackers::Sourcery;
 
 %*ENV<RAKUDO_ERROR_COLOR> = 0;
 
